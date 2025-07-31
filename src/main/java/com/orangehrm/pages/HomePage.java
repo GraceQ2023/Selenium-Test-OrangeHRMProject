@@ -32,7 +32,7 @@ public class HomePage {
     private By emplLastName = By.xpath("//div[@class='oxd-table-card']/div/div[4]");
     public static final Logger logger = LoggerManager.getLogger(HomePage.class);
 
-    // HomePage relies on ActionDriver to perform actions.
+    // HomePage relies on ActionDriver to perform action.
     // Whenever creates a HomePage object, make sure it has access to an ActionDriver that uses the same WebDriver and properties file
     // everything to use the same driver instance from BaseClass, not create a new one.
     // It ensures that as soon as you create a HomePage, the actionDriver is ready to use.
