@@ -18,6 +18,7 @@ public class DummyTest extends BaseClass {
 
     @Test
     public void dummyTest(){
+        // Test checkin to trigger Jenkins build automatically via ngrok
         // ExtentManager.startTestEntry("DummyTest1 Test", this.getClass().getSimpleName()); --> This has been implemented in TestListener class
         String pageTitle = getDriver().getTitle();
         System.out.println(pageTitle);
