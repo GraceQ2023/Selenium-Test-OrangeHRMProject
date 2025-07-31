@@ -54,7 +54,9 @@
 	                <p><b>Build Number:</b> #${env.BUILD_NUMBER}</p>
 	                <p><b>Build Status:</b> <span style="color: green;"><b>SUCCESS</b></span></p>
 	                <p><b>Build URL:</b> <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
-	                <p><b>Extent Report:</b> <a href="http://localhost:8080/job/${env.JOB_NAME}/HTML_20Extent_20Report/">Click here</a></p>
+	                <p><b>Extent Report:</b> <a href="http://localhost:8080/job/${env.JOB_NAME}/Extent_20Report/">Click here</a></p>
+
+
 	                <p>Cheers,</p>
 	                <p><b>Grace - Automation Team</b></p>
 
@@ -79,7 +81,7 @@
 	                <p><b>Build Status:</b> <span style="color: red;"><b>FAILED ❌</b></span></p>
 	                <p><b>Build URL:</b> <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
 	                <p><b>Please check the logs and take necessary actions.</b></p>
-	                <p><b>Extent Report (if available):</b> <a href="http://localhost:8080/job/${env.JOB_NAME}/HTML_20Extent_20Report/">Click here</a></p>
+	                <p><b>Extent Report (if available):</b> <a href="http://localhost:8080/job/${env.JOB_NAME}/Extent_20Report/">Click here</a></p>
 	                <p>Cheers,</p>
 	                <p><b>Grace - Automation Team</b></p>
 
