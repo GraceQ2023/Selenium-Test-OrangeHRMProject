@@ -30,9 +30,10 @@ public class TestListener implements ITestListener, IAnnotationTransformer {
     public void onTestStart(ITestResult result) {
         String testName = result.getMethod().getMethodName();
         String className = result.getTestClass().getRealClass().getSimpleName();
+        String browser = result.getTestContext().getCurrentXmlTest().getParameter("browser");
         // Start logging in Extent Report
         ExtentManager.startTestEntry(testName, className);
-        ExtentManager.logStep("Test started --> " + testName);
+        ExtentManager.logStep("Test started --> " + testName  + " On browser --> " + browser);
     }
 
     // Triggered when a Test success
@@ -58,7 +59,7 @@ public class TestListener implements ITestListener, IAnnotationTransformer {
         if(!result.getTestClass().getName().toLowerCase().contains("api")){
             ExtentManager.logFailure(BaseClass.getDriver(),"Test failed.", "Test End: " + testName + " - x Test Failed");
         }else{
-            ExtentManager.logFailureAPI("Test End: " + testName + " - x Test Failed");
+            ExtentManager.logFailureAPI("Test End: " + testName);
         }
     }
 

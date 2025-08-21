@@ -174,7 +174,6 @@ public class ExtentManager {
         }
     }
 
-
     // Register WebDriver for current Thread
     // So, if you want to take a screenshot, you know which WebDriver belongs to which thread
     public static void registerDriver(WebDriver driver){
