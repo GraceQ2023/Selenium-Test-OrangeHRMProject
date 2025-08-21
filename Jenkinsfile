@@ -8,6 +8,7 @@
         environment {
             COMPOSE_PATH = "${WORKSPACE}/docker"
             SELENIUM_GRID = "true"
+            DOCKER_CLI = "/usr/local/bin/docker"
         }
 
 	    stages {
@@ -16,7 +17,7 @@
                     withCredentials([usernamePassword(credentialsId: 'DOCKER_CREDENTIALS',
                                                       usernameVariable: 'DOCKER_USERNAME',
                                                       passwordVariable: 'DOCKER_PASSWORD')]) {
-                        sh 'echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin'
+                        sh "echo $DOCKER_PASSWORD | ${DOCKER_CLI} login -u $DOCKER_USERNAME --password-stdin"
                     }
                 }
             }
@@ -25,7 +26,7 @@
                 steps {
                     script {
                         echo "Starting Selenium Grid with Docker Compose..."
-                         sh "/usr/local/bin/docker compose -f ${COMPOSE_PATH}/docker-compose.yml up -d"
+                        sh "${DOCKER_CLI} compose -f ${COMPOSE_PATH}/docker-compose.yml up -d"
 
                         echo "Waiting for Selenium Grid to be ready..."
                         sh '''
@@ -66,7 +67,7 @@
                 steps {
                     script {
                         echo "Stopping Selenium Grid..."
-                        sh "/usr/local/bin/docker compose -f ${COMPOSE_PATH}/docker-compose.yml down"
+                        sh "${DOCKER_CLI} compose -f ${COMPOSE_PATH}/docker-compose.yml down"
                     }
                 }
             }
