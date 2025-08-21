@@ -11,6 +11,16 @@
         }
 
 	    stages {
+            stage('Docker Login') {
+                steps {
+                    withCredentials([usernamePassword(credentialsId: 'DOCKER_CREDENTIALS',
+                                                      usernameVariable: 'DOCKER_USERNAME',
+                                                      passwordVariable: 'DOCKER_PASSWORD')]) {
+                        sh 'echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin'
+                    }
+                }
+            }
+
             stage('Start Selenium Grid via Docker Compose') {
                 steps {
                     script {
