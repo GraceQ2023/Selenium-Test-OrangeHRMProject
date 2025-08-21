@@ -25,10 +25,21 @@
                 steps {
                     script {
                         echo "Starting Selenium Grid with Docker Compose..."
-                        sh "/usr/local/bin/docker compose -f ${COMPOSE_PATH}/docker-compose.yml up -d"
+                         sh "/usr/local/bin/docker compose -f ${COMPOSE_PATH}/docker-compose.yml up -d"
 
                         echo "Waiting for Selenium Grid to be ready..."
-                        sleep 50 // Add a wait if needed
+                        sh '''
+                            for i in {1..60}; do
+                                if curl -s http://localhost:4444/wd/hub/status | grep -q '"ready":true'; then
+                                    echo "Selenium Grid is ready!"
+                                    exit 0
+                                fi
+                                echo "Waiting for Selenium Grid..."
+                                sleep 2
+                            done
+                            echo "Selenium Grid failed to start in time"
+                            exit 1
+                        '''
                     }
                 }
             }
