@@ -15,7 +15,7 @@
                 steps {
                     script {
                         echo "Starting Selenium Grid with Docker Compose..."
-                        sh "docker compose -f ${COMPOSE_PATH}/docker-compose.yml up -d"
+                        sh "/usr/local/bin/docker compose -f ${COMPOSE_PATH}/docker-compose.yml up -d"
 
                         echo "Waiting for Selenium Grid to be ready..."
                         sleep 50 // Add a wait if needed
@@ -45,7 +45,7 @@
                 steps {
                     script {
                         echo "Stopping Selenium Grid..."
-                        sh "docker compose -f ${COMPOSE_PATH}/docker-compose.yml down"
+                        sh "/usr/local/bin/docker compose -f ${COMPOSE_PATH}/docker-compose.yml down"
                     }
                 }
             }
