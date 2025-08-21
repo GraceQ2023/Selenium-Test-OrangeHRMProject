@@ -15,9 +15,10 @@
                 steps {
                     script {
                         echo "Starting Selenium Grid with Docker Compose..."
-                        sh "docker compose -f ${COMPOSE_PATH}\\docker-compose.yml up -d"
+                        sh "docker compose -f ${COMPOSE_PATH}/docker-compose.yml up -d"
+
                         echo "Waiting for Selenium Grid to be ready..."
-                        sleep 30 // Add a wait if needed
+                        sleep 50 // Add a wait if needed
                     }
                 }
             }
@@ -44,7 +45,7 @@
                 steps {
                     script {
                         echo "Stopping Selenium Grid..."
-                        sh "docker compose -f ${COMPOSE_PATH}\\docker-compose.yml down"
+                        sh "docker compose -f ${COMPOSE_PATH}/docker-compose.yml down"
                     }
                 }
             }
@@ -69,7 +70,7 @@
 	        success {
 	            emailext (
 	                to: 'graceqinys@gmail.com',
-	                subject: "Build Success: ${env.JOB_NAME} #${env.doBUILD_NUMBER}",
+	                subject: "Build Success: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
 	                body: """
                     <html>
                     <body>
