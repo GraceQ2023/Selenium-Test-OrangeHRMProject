@@ -15,7 +15,7 @@
                 steps {
                     script {
                         echo "Starting Selenium Grid with Docker Compose..."
-                        bat "docker compose -f ${COMPOSE_PATH}\\docker-compose.yml up -d"
+                        sh "docker compose -f ${COMPOSE_PATH}\\docker-compose.yml up -d"
                         echo "Waiting for Selenium Grid to be ready..."
                         sleep 30 // Add a wait if needed
                     }
@@ -30,13 +30,13 @@
 
             stage('Build') {
                 steps {
-                    bat 'mvn clean install -DseleniumGrid=true'
+                    sh 'mvn clean install -DseleniumGrid=true'
                 }
             }
 
             stage('Test') {
                 steps {
-                    bat "mvn clean test -DseleniumGrid=true"
+                    sh "mvn clean test -DseleniumGrid=true"
                 }
             }
 
@@ -44,7 +44,7 @@
                 steps {
                     script {
                         echo "Stopping Selenium Grid..."
-                        bat "docker compose -f ${COMPOSE_PATH}\\docker-compose.yml down"
+                        sh "docker compose -f ${COMPOSE_PATH}\\docker-compose.yml down"
                     }
                 }
             }
@@ -69,7 +69,7 @@
 	        success {
 	            emailext (
 	                to: 'graceqinys@gmail.com',
-	                subject: "Build Success: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+	                subject: "Build Success: ${env.JOB_NAME} #${env.doBUILD_NUMBER}",
 	                body: """
                     <html>
                     <body>

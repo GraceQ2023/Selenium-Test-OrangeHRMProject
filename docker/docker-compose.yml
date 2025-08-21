@@ -1,6 +1,7 @@
 # version key is obsolete in newer Docker Compose — safe to remove
 services:
   chrome:
+    platform: linux/amd64
     image: selenium/node-chrome:4.34.0
     shm_size: 2gb
     deploy:
@@ -16,6 +17,7 @@ services:
       - SE_NODE_MAX_SESSIONS=4
 
   firefox:
+    platform: linux/amd64
     image: selenium/node-firefox:4.34.0
     shm_size: 2gb
     deploy:
@@ -31,6 +33,7 @@ services:
       - SE_NODE_MAX_SESSIONS=2
 
   edge:
+    platform: linux/amd64
     image: selenium/node-edge:4.34.0
     shm_size: 2gb
     deploy:
@@ -46,6 +49,7 @@ services:
       - SE_NODE_MAX_SESSIONS=1
 
   selenium-hub:
+    platform: linux/amd64
     image: selenium/hub:4.34.0
     container_name: selenium-hub
     ports:
