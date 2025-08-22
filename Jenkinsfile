@@ -9,6 +9,7 @@
             COMPOSE_PATH = "${WORKSPACE}/docker"
             SELENIUM_GRID = "true"
             DOCKER_CLI = "/usr/local/bin/docker"
+            DOCKER_CONFIG = "${WORKSPACE}/.docker"   // force Docker to use a local config, not Desktop
         }
 
 	    stages {
@@ -17,7 +18,10 @@
                     withCredentials([usernamePassword(credentialsId: 'DOCKER_CREDENTIALS',
                                                       usernameVariable: 'DOCKER_USERNAME',
                                                       passwordVariable: 'DOCKER_PASSWORD')]) {
-                        sh "echo $DOCKER_PASSWORD | ${DOCKER_CLI} login -u $DOCKER_USERNAME --password-stdin"
+                        sh '''
+                            echo "$DOCKER_PASSWORD" | ${DOCKER_CLI} login -u "$DOCKER_USERNAME" --password-stdin
+                        '''
+
                     }
                 }
             }
@@ -26,12 +30,13 @@
                 steps {
                     script {
                         echo "Starting Selenium Grid with Docker Compose..."
-                        sh "${DOCKER_CLI} compose -f ${COMPOSE_PATH}/docker-compose.yml up -d"
+                        sh "/usr/local/bin/docker-compose -f ${COMPOSE_PATH}/docker-compose.yml up -d"
+
 
                         echo "Waiting for Selenium Grid to be ready..."
                         sh '''
                             for i in {1..60}; do
-                                if curl -s http://localhost:4444/wd/hub/status | grep -q '"ready":true'; then
+                                if curl -s http://localhost:4444/status | grep -q '"ready": *true'; then
                                     echo "Selenium Grid is ready!"
                                     exit 0
                                 fi
@@ -67,7 +72,7 @@
                 steps {
                     script {
                         echo "Stopping Selenium Grid..."
-                        sh "${DOCKER_CLI} compose -f ${COMPOSE_PATH}/docker-compose.yml down"
+                        sh "/usr/local/bin/docker-compose -f ${COMPOSE_PATH}/docker-compose.yml down"
                     }
                 }
             }

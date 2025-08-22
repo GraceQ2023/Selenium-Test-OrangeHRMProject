@@ -158,9 +158,8 @@ public class BaseClass {
         getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(implicitWait));
 
         // Maximize the browser
-//        getDriver().manage().window().maximize();
-        getDriver().manage().window().setSize(new Dimension(1920, 1080));
-
+        getDriver().manage().window().maximize();
+//        getDriver().manage().window().setSize(new Dimension(1920, 1080));
 
         // Navigate to the URL
 //            try{
