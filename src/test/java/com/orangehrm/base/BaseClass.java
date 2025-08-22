@@ -50,7 +50,6 @@ public class BaseClass {
     // withInitial() automatically create a new SoftAssert object for that thread.
     // So it removes the need for @BeforeMethod: softAssertThreadLocal.set(new SoftAssert());
     private static ThreadLocal<SoftAssert> softAssert = ThreadLocal.withInitial(SoftAssert::new);
-    // private static ThreadLocal<SoftAssert> softAssert = new ThreadLocal<>(); need to add:softAssertThreadLocal.set(new SoftAssert());
 
     // Ask LoggerManager to give a logger for this class
     public static final Logger logger = LoggerManager.getLogger(BaseClass.class);
@@ -70,7 +69,6 @@ public class BaseClass {
     @Parameters("browser")
     public void setUp(String browser) throws IOException {
         logger.info("Setting up WebDriver for: " + this.getClass().getSimpleName() + " on browser --> " + browser);
-//        System.out.println("Setting up WebDriver for: " + this.getClass().getSimpleName());
         launchBrowser(browser);
         configerBrowser();
         staticWait(3);
@@ -113,11 +111,10 @@ public class BaseClass {
             switch (browser.toLowerCase()) {
                 case "chrome":
                     // Create ChromeOptions -make browser run more efficiently, quietly, more CI/CD–friendly (i.e. Jenkins, GitHub Actions, etc.)
-                    ChromeOptions chromeOptions = new ChromeOptions();
                     // Runs in headless mode (no browser UI), Disables GPU usage (important for headless to avoid rendering issues),
                     // Sets the browser window size (helps avoid layout issues that appear in small default headless sizes)
+                    ChromeOptions chromeOptions = new ChromeOptions();
                     chromeOptions.addArguments("--headless", "--disable-gpu", "--disable-notifications", "--window-size=1920,1080", "--disable-dev-shm-usage", "--no-sandbox");
-                    // driver = new ChromeDriver();
                     driver.set(new ChromeDriver(chromeOptions)); // new changes as per Thread
                     ExtentManager.registerDriver(getDriver());
                     logger.info("chrome driver instance is created.");
@@ -158,16 +155,8 @@ public class BaseClass {
         getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(implicitWait));
 
         // Maximize the browser
-        getDriver().manage().window().maximize();
-//        getDriver().manage().window().setSize(new Dimension(1920, 1080));
+        getDriver().manage().window().setSize(new Dimension(1920, 1080));
 
-        // Navigate to the URL
-//            try{
-//                String url = prop.getProperty("url");
-//                getDriver().get(url);
-//            }catch(Exception e){
-//                logger.error("Failed to navigate to URL. " + e.getMessage() );
-//            }
         if(seleniumGrid){
             getDriver().get(prop.getProperty("url_grid"));
         }else {
@@ -242,5 +231,4 @@ public class BaseClass {
     public void staticWait(int seconds){
         LockSupport.parkNanos(TimeUnit.SECONDS.toNanos(seconds));
     }
-
 }
