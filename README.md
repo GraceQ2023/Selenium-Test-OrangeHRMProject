@@ -1,9 +1,8 @@
-# OrangeHRM Automation Testing Project  
 
 
 ## 📌 Project Overview  
 
-This is an end-to-end automation testing project built for the [OrangeHRM Demo Site](https://opensource-demo.orangehrmlive.com/web/index.php/auth/login)
+This is a small end-to-end automation testing project built for the [OrangeHRM Demo Site](https://opensource-demo.orangehrmlive.com/web/index.php/auth/login)
 . The project demonstrates the design and implementation of a Selenium automation framework with CI/CD integration using Jenkins, Docker, and Selenium Grid.
 It covers functional, cross-browser, API, and database testing, with reporting and logging integrated.
 
@@ -35,28 +34,66 @@ It covers functional, cross-browser, API, and database testing, with reporting a
 
 ## 🚀 How to Run
 
+### Prerequisites
+1. Have the required browsers installed: Chrome, Edge, Firefox.
+2. Set up the OrangeHRM demo site locally:
+    - Download and install [XAMPP](https://www.apachefriends.org/download.html).
+    - Download OrangeHRM from [SourceForge](https://www.orangehrm.com/en/open-source/register-to-download).
+    - Start Apache and MySQL in XAMPP.
+    - Create a database named `orangehrm` in phpMyAdmin.
+    - Copy the OrangeHRM folder into `htdocs/`.
+    - Open your browser and go to [http://localhost/orangehrm/](http://localhost/orangehrm/) to complete installation.
+    - Create an admin user:
+      ```
+      Username: orangehrm_hverma
+      Password: Rmit1234!
+      ```
+
 ### 🔹 Run Tests Locally
-Clone the repository:
-git clone https://github.com/GraceQ2023/Selenium-Test-OrangeHRMProject.git
-cd Selenium-Test-OrangeHRMProject
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/GraceQ2023/Selenium-Test-OrangeHRMProject.git
+   cd Selenium-Test-OrangeHRMProject
+   ```
 
-Install dependencies:
-mvn clean install
+2. Install dependencies:
+    ```bash
+    mvn clean install
+   ```
 
-Run TestNG suite:
-mvn test -DsuiteXmlFile=testng.xml
+3. Run TestNG suite:
+    ```bash
+    mvn test -DsuiteXmlFile=testng.xml
+   ```
 
 ### 🔹 Run with Selenium Grid (Docker)
-Start Selenium Grid using Docker Compose:
-docker compose -f docker/docker-compose.yml up -d
+1. Update config.properties to: seleniumGrid=true
+2. Start Selenium Grid using Docker Compose:
+    ```bash
+    docker compose -f docker/docker-compose.yml up -d
+   ```
 
-Run tests in parallel on Grid:
-mvn test -DseleniumGrid=true
+3. Run tests in parallel on Grid:
+    ```bash
+    mvn test -DseleniumGrid=true
+   ```
 
-### 🔹 Run via Jenkins Pipeline
-Configure Jenkins with Maven and JDK.
-Add pipeline script (Jenkinsfile) from repository.
-Trigger the build → Jenkins will spin up Selenium Grid, run tests, and publish reports.
+### 🔹 Run via Jenkins Pipeline (macOS)
+1. Update config.properties to: seleniumGrid=true
+2. Install Jenkins (e.g., via Homebrew: brew install jenkins-lts).
+3. Unlock Jenkins using the initial admin password
+    ```bash
+   cat ~/.jenkins/secrets/initialAdminPassword
+   ```
+4. Configure Jenkins: Install Maven and JDK in Jenkins global tools
+5. Create a Pipeline job:
+   - Job type: Pipeline
+   - Definition: Pipeline script from SCM
+   - Repository URL: your GitHub repo
+   - Script Path: Jenkinsfile
+6. Run the Pipeline:
+   - Jenkins will automatically spin up Selenium Grid, run tests, and publish reports.
+   - Test results can be viewed in Jenkins and automatically sent out.
 
 
 ## 📊 Reporting
