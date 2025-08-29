@@ -48,6 +48,7 @@ It covers functional, cross-browser, API, and database testing, with reporting a
       Username: orangehrm_hverma
       Password: Rmit1234!
       ```
+⚠️ **Note:** The project includes database validation test, so OrangeHRM must be running locally. Database test will fail if the local site is not set up.
 
 ### 🔹 Run Tests Locally
 1. Clone the repository:
