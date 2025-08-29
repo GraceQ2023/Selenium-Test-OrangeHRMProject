@@ -353,7 +353,6 @@ public class ActionDriver {
     }
 
     // Window and Frame Handling
-
     // Method to switch between browser windows
     public void switchToWindow(String windowTitle){
         try {
@@ -381,11 +380,6 @@ public class ActionDriver {
         }
     }
 
-    // Method to switch back to the default content
-    public void switchToDefaultContent() {
-        driver.switchTo().defaultContent();
-        logger.info("Switched back to default content.");
-    }
 
     // ===================== Alert Handling =====================
 
@@ -416,138 +410,6 @@ public class ActionDriver {
         } catch (Exception e) {
             logger.error("No alert text found", e);
             return "";
-        }
-    }
-
-    // ===================== Browser Actions =====================
-
-    public void refreshPage() {
-        try {
-            driver.navigate().refresh();
-            ExtentManager.logStep("Page refreshed successfully.");
-            logger.info("Page refreshed successfully.");
-        } catch (Exception e) {
-            // ExtentManager.logFailure(BaseClass.getDriver(), "Unable to refresh page", "refresh_page_failed");  ? why need to use getDriver()??
-            ExtentManager.logFailure(driver, "Unable to refresh page", "refresh_page_failed");
-            logger.error("Unable to refresh page: " + e.getMessage());
-        }
-    }
-
-    public String getCurrentURL() {
-        try {
-            String url = driver.getCurrentUrl();
-            ExtentManager.logStep("Current URL fetched: " + url);
-            logger.info("Current URL fetched: " + url);
-            return url;
-        } catch (Exception e) {
-            //ExtentManager.logFailure(BaseClass.getDriver(), "Unable to fetch current URL", "get_current_url_failed");
-            ExtentManager.logFailure(driver, "Unable to fetch current URL", "get_current_url_failed");
-            logger.error("Unable to fetch current URL: " + e.getMessage());
-            return null;
-        }
-    }
-
-    public void maximizeWindow() {
-        try {
-            driver.manage().window().maximize();
-            ExtentManager.logStep("Browser window maximized.");
-            logger.info("Browser window maximized.");
-        } catch (Exception e) {
-            // ExtentManager.logFailure(BaseClass.getDriver(), "Unable to maximize window", "maximize_window_failed");
-            ExtentManager.logFailure(driver, "Unable to maximize window", "maximize_window_failed");
-            logger.error("Unable to maximize window: " + e.getMessage());
-        }
-    }
-
-    // ===================== Advanced WebElement Actions =====================
-
-    public void moveToElement(By by) {
-        String elementDescription = getElementDescription(by);
-        try {
-            Actions actions = new Actions(driver);
-            actions.moveToElement(driver.findElement(by)).perform();
-            ExtentManager.logStep("Moved to element: " + elementDescription);
-            logger.info("Moved to element --> " + elementDescription);
-        } catch (Exception e) {
-            ExtentManager.logFailure(driver, "Unable to move to element", elementDescription + "_move_failed");
-            logger.error("Unable to move to element: " + e.getMessage());
-        }
-    }
-
-    public void dragAndDrop(By source, By target) {
-        String sourceDescription = getElementDescription(source);
-        String targetDescription = getElementDescription(target);
-        try {
-            Actions actions = new Actions(driver);
-            actions.dragAndDrop(driver.findElement(source), driver.findElement(target)).perform();
-            ExtentManager.logStep("Dragged element: " + sourceDescription + " and dropped on " + targetDescription);
-            logger.info("Dragged element: " + sourceDescription + " and dropped on " + targetDescription);
-        } catch (Exception e) {
-            ExtentManager.logFailure(driver, "Unable to drag and drop", sourceDescription + "_drag_failed");
-            logger.error("Unable to drag and drop: " + e.getMessage());
-        }
-    }
-
-    public void doubleClick(By by) {
-        String elementDescription = getElementDescription(by);
-        try {
-            Actions actions = new Actions(driver);
-            actions.doubleClick(driver.findElement(by)).perform();
-            ExtentManager.logStep("Double-clicked on element: " + elementDescription);
-            logger.info("Double-clicked on element --> " + elementDescription);
-        } catch (Exception e) {
-            ExtentManager.logFailure(driver, "Unable to double-click element", elementDescription + "_doubleclick_failed");
-            logger.error("Unable to double-click element: " + e.getMessage());
-        }
-    }
-
-    public void rightClick(By by) {
-        String elementDescription = getElementDescription(by);
-        try {
-            Actions actions = new Actions(driver);
-            actions.contextClick(driver.findElement(by)).perform();
-            ExtentManager.logStep("Right-clicked on element: " + elementDescription);
-            logger.info("Right-clicked on element --> " + elementDescription);
-        } catch (Exception e) {
-            ExtentManager.logFailure(driver, "Unable to right-click element", elementDescription + "_rightclick_failed");
-            logger.error("Unable to right-click element: " + e.getMessage());
-        }
-    }
-
-    public void sendKeysWithActions(By by, String value) {
-        String elementDescription = getElementDescription(by);
-        try {
-            Actions actions = new Actions(driver);
-            actions.sendKeys(driver.findElement(by), value).perform();
-            ExtentManager.logStep("Sent keys to element: " + elementDescription + " | Value: " + value);
-            logger.info("Sent keys to element --> " + elementDescription + " | Value: " + value);
-        } catch (Exception e) {
-            ExtentManager.logFailure(driver, "Unable to send keys", elementDescription + "_sendkeys_failed");
-            logger.error("Unable to send keys to element: " + e.getMessage());
-        }
-    }
-
-    public void clearText(By by) {
-        String elementDescription = getElementDescription(by);
-        try {
-            driver.findElement(by).clear();
-            ExtentManager.logStep("Cleared text in element: " + elementDescription);
-            logger.info("Cleared text in element --> " + elementDescription);
-        } catch (Exception e) {
-            ExtentManager.logFailure(driver, "Unable to clear text", elementDescription + "_clear_failed");
-            logger.error("Unable to clear text in element: " + e.getMessage());
-        }
-    }
-
-    // Method to upload a file
-    public void uploadFile(By by, String filePath) {
-        try {
-            driver.findElement(by).sendKeys(filePath);
-            applyBorder(by, "green");
-            logger.info("Uploaded file: " + filePath);
-        } catch (Exception e) {
-            applyBorder(by, "red");
-            logger.error("Unable to upload file: " + e.getMessage());
         }
     }
 
